@@ -6,13 +6,13 @@ import transform
 import adv
 
 net = getattr(network, 'marks')()
-net.load_state_dict(torch.load('./model/marks_20171020.pth'))
+net.load_state_dict(torch.load('./netmarks/netmarks_dxy2022.pth'))
 net.cuda()
 net.eval()
 net.feature = True
-path = '/mnt/server9_hard1/seungju/dataset/LFW'
+path = '/nebula-dxy/dataset/LFW'
 landmark = {}
-with open(data_path + '/lfw_landmark.txt') as p:
+with open(path + '/lfw_landmark.txt') as p:
     landmarks = p.readlines()
 for line in landmarks:
     l = line.replace('\n', '').split('\t')
@@ -20,7 +20,7 @@ for line in landmarks:
 with open(path + '/pairs.txt') as p:
     pairs = p.readlines()[1:]
 x = adv.random_select(landmark, pairs, path)
-saveImg(x, 'original')
+saveImg(x, 'original_Img')
 x_adv = adv.generate_adv(net, x, T=10000)
 pdb.set_trace()
-saveImg(x, 'final')
+saveImg(x, 'final_Img')
