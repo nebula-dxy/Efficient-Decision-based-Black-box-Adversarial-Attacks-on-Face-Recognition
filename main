@@ -1,0 +1,26 @@
+import numpy as np
+import torch
+import pdb
+import net_sphere
+import transform
+import adv
+
+net = getattr(net_sphere, 'sphere20a')()
+net.load_state_dict(torch.load('./model/sphere20a_20171020.pth'))
+net.cuda()
+net.eval()
+net.feature = True
+path = '/mnt/server9_hard1/seungju/dataset/LFW'
+landmark = {}
+with open(data_path + '/lfw_landmark.txt') as p:
+    landmarks = p.readlines()
+for line in landmarks:
+    l = line.replace('\n', '').split('\t')
+    landmark[l[0]] = [int(k) for k in l[1:]]
+with open(path + '/pairs.txt') as p:
+    pairs = p.readlines()[1:]
+x = adv.random_select(landmark, pairs, path)
+saveImg(x, 'original')
+x_adv = adv.generate_adv(net, x, T=10000)
+pdb.set_trace()
+saveImg(x, 'final')
