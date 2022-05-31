@@ -31,7 +31,7 @@ def findNonrefsimilar(uv, xy, options=None):
     u = uv[:, 0].reshape((-1, 1))
     v = uv[:, 1].reshape((-1, 1)) 
     U = np.vstack((u, v))
-    if rank(X) >= 2 * K:
+    if matrix_rank(X) >= 2 * K:
         r, _, _, _ = lstsq(X, U)
         r = np.squeeze(r)
     else:
