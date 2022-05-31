@@ -88,9 +88,9 @@ class AngleLoss(nn.Module):
         return loss
 
 
-class sphere20a(nn.Module):
+class netmark(nn.Module):
     def __init__(self,classnum=10574,feature=False):
-        super(sphere20a, self).__init__()
+        super(netmark, self).__init__()
         self.classnum = classnum
         self.feature = feature
         #input = B*3*112*96
